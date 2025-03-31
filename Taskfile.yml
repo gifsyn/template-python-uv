@@ -1,0 +1,43 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    desc: "task --list-all"
+    cmds:
+      - task --list-all
+
+  hadolint:
+    desc: "Run hadolint"
+    cmds:
+      - find . -name 'Dockerfile*' | xargs -r hadolint
+
+  mypy:
+    desc: "Run mypy"
+    cmds:
+      - uv run mypy .
+
+  ruff:
+    desc: "Run Ruff check and format"
+    cmds:
+      - uv run ruff check . --fix
+      - uv run ruff format .
+    ignore_error: true
+
+  check:
+    desc: "Run all static analysis tools"
+    cmds:
+      - task: hadolint
+      - task: mypy
+      - task: ruff
+    ignore_error: true
+
+  test:
+    desc: "Run pytest"
+    cmds:
+      - uv run pytest
+  test-cov:
+    desc: "Run pytest with coverage"
+    cmds:
+      - uv run pytest -v --cov=.

@@ -1,0 +1,9 @@
+@startuml temp
+
+class A {
+    +int a
+    +int b
+    +int c
+}
+
+@enduml

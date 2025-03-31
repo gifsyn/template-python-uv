@@ -1,0 +1,46 @@
+name: template-python-uv
+services:
+  app:
+    image: template-python-uv:dev
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.dev
+    volumes:
+      - ..:/app
+      # - ${HOME}/.ssh:/home/appuser/.ssh
+      # - ${HOME}/.gnupg:/home/appuser/.gnupg
+    user: "appuser"
+    tty: true
+    # ports:
+    #   - "8000:8000"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "template_python_uv"
+    expose:
+      - "5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:9
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@example.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+      PGADMIN_LISTEN_PORT: "8080"
+    expose:
+      - "8080"
+    depends_on:
+      - postgres
+
+  plantuml:
+    image: plantuml/plantuml-server:jetty
+    expose:
+      - "8080"

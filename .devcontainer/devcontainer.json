@@ -1,0 +1,39 @@
+{
+    "name": "template-python-uv",
+    "dockerComposeFile": [
+        "./compose.dev.yml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/app",
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/home/appuser/.ssh,type=bind"
+        // "source=${localEnv:HOME}/.gnupg,target=/home/appuser/.gnupg,type=bind"
+    ],
+    "postCreateCommand": "uv sync --dev",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                // Docker
+                "ms-azuretools.vscode-docker",
+                "exiasr.hadolint",
+                // Python
+                "ms-python.python",
+                "ms-python.mypy-type-checker",
+                "charliermarsh.ruff",
+                // TOML
+                "tamasfe.even-better-toml",
+                // Git
+                "donjayamanne.githistory",
+                "mhutchie.git-graph",
+                // Others
+                "usernamehw.errorlens",
+                "Gruntfuggly.todo-tree",
+                "humao.rest-client",
+                "jebbs.plantuml"
+            ]
+        }
+    },
+    "forwardPorts": [
+        "pgadmin:8080"
+    ]
+}
