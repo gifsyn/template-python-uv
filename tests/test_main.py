@@ -1,11 +1,7 @@
-import logging
-
 import pytest
 from _pytest.capture import CaptureFixture
 
-from app.main import main
-
-logger = logging.getLogger(__name__)
+from template_python_uv.main import main
 
 
 @pytest.mark.asyncio

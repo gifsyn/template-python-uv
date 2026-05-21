@@ -1,4 +1,4 @@
-# https://taskfile.dev
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 
 version: '3'
 
@@ -16,13 +16,18 @@ tasks:
   mypy:
     desc: "Run mypy"
     cmds:
-      - uv run mypy .
+      - uv run mypy --no-incremental ./src ./tests
+
+  ty:
+    desc: "Run ty"
+    cmds:
+      - uv run ty check ./src ./tests
 
   ruff:
     desc: "Run Ruff check and format"
     cmds:
-      - uv run ruff check . --fix
-      - uv run ruff format .
+      - uv run ruff check ./src ./tests --fix
+      - uv run ruff format ./src ./tests
     ignore_error: true
 
   check:
@@ -30,6 +35,7 @@ tasks:
     cmds:
       - task: hadolint
       - task: mypy
+      - task: ty
       - task: ruff
     ignore_error: true
 

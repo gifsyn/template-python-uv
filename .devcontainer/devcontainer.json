@@ -3,37 +3,47 @@
     "dockerComposeFile": [
         "./compose.dev.yml"
     ],
-    "service": "app",
-    "workspaceFolder": "/app",
-    "mounts": [
-        "source=${localEnv:HOME}/.ssh,target=/home/appuser/.ssh,type=bind"
-        // "source=${localEnv:HOME}/.gnupg,target=/home/appuser/.gnupg,type=bind"
+    "service": "workspace",
+    "workspaceFolder": "/workspace",
+    "postCreateCommand": [
+        "bash", ".devcontainer/postCreateCommand.sh"
     ],
-    "postCreateCommand": "uv sync --dev",
     "customizations": {
         "vscode": {
             "extensions": [
                 // Docker
-                "ms-azuretools.vscode-docker",
+                "ms-azuretools.vscode-containers",
+                "docker.docker",
                 "exiasr.hadolint",
                 // Python
                 "ms-python.python",
                 "ms-python.mypy-type-checker",
+                // "astral-sh.ty",
                 "charliermarsh.ruff",
                 // TOML
                 "tamasfe.even-better-toml",
+                // YAML
+                "redhat.vscode-yaml",
                 // Git
                 "donjayamanne.githistory",
                 "mhutchie.git-graph",
                 // Others
                 "usernamehw.errorlens",
-                "Gruntfuggly.todo-tree",
-                "humao.rest-client",
-                "jebbs.plantuml"
-            ]
+                "Gruntfuggly.todo-tree"
+            ],
+            "settings": {
+                "files.exclude": {
+                    "**/.git": false,
+                    "**/__pycache__": true,
+                    "**/.mypy_cache": true,
+                    "**/.pytest_cache": true,
+                    "**/.ruff_cache": true
+                },
+                "editor.renderWhitespace": "all",
+                "explorer.compactFolders": false,
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "remote.autoForwardPorts": false
+            }
         }
-    },
-    "forwardPorts": [
-        "pgadmin:8080"
-    ]
+    }
 }
